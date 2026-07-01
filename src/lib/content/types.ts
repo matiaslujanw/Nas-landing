@@ -1,6 +1,16 @@
 export type ServiceItem = {
   title: string;
+  /** subtítulo corto que acompaña al nombre en la pestaña */
+  tagline: string;
   description: string;
+  /** bullets de "¿Qué incluye?" */
+  includes: string[];
+  /** bullets de "Ideal para vos si..." */
+  idealFor: string[];
+  /** texto del botón principal */
+  ctaLabel: string;
+  /** destino del botón: "#contacto" pre-carga el formulario; una URL abre link externo */
+  ctaHref: string;
   theme: "bosque" | "orquidea" | "musgo";
 };
 
@@ -25,6 +35,8 @@ export type SiteContent = {
     paragraphs: string[];
     quote: string;
     image: string;
+    /** fotos para el carrusel; si está vacío se usa `image` */
+    gallery: string[];
   };
   services: {
     eyebrow: string;
@@ -45,6 +57,10 @@ export type SiteContent = {
     instagramUrl: string;
     email: string;
     phone: string;
+    /** URLs de redes (vacío = no se muestra el ícono) */
+    youtubeUrl: string;
+    xUrl: string;
+    facebookUrl: string;
   };
   footer: {
     copy: string;

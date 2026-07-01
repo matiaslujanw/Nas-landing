@@ -72,7 +72,12 @@ export async function saveContent(_prev: unknown, formData: FormData) {
       items: defaultContent.services.items.map((item, i) => ({
         ...item,
         title: str(formData, `services.items.${i}.title`),
+        tagline: str(formData, `services.items.${i}.tagline`) || item.tagline,
         description: str(formData, `services.items.${i}.description`),
+        includes: lines(formData, `services.items.${i}.includes`, item.includes),
+        idealFor: lines(formData, `services.items.${i}.idealFor`, item.idealFor),
+        ctaLabel: str(formData, `services.items.${i}.ctaLabel`) || item.ctaLabel,
+        ctaHref: str(formData, `services.items.${i}.ctaHref`) || item.ctaHref,
       })),
     },
     testimonials: {
@@ -93,6 +98,9 @@ export async function saveContent(_prev: unknown, formData: FormData) {
       instagramUrl: str(formData, "contact.instagramUrl"),
       email: str(formData, "contact.email"),
       phone: str(formData, "contact.phone"),
+      youtubeUrl: str(formData, "contact.youtubeUrl"),
+      xUrl: str(formData, "contact.xUrl"),
+      facebookUrl: str(formData, "contact.facebookUrl"),
     },
     footer: {
       copy: str(formData, "footer.copy"),
@@ -114,4 +122,13 @@ export async function saveContent(_prev: unknown, formData: FormData) {
 
 function str(formData: FormData, key: string): string {
   return ((formData.get(key) as string) ?? "").trim();
+}
+
+function lines(formData: FormData, key: string, fallback: string[]): string[] {
+  const raw = (formData.get(key) as string) ?? "";
+  const parsed = raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+  return parsed.length > 0 ? parsed : fallback;
 }

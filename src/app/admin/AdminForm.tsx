@@ -72,8 +72,11 @@ export default function AdminForm({
           defaultValue={content.services.subheading}
         />
         {content.services.items.map((item, i) => (
-          <div key={i} className="rounded-[12px] border border-pardo/60 bg-white p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-wide text-red-wine">
+          <div
+            key={i}
+            className="flex flex-col gap-4 rounded-[12px] border border-pardo/60 bg-white p-4"
+          >
+            <p className="text-xs font-bold uppercase tracking-wide text-red-wine">
               Servicio {i + 1}
             </p>
             <Text
@@ -81,11 +84,40 @@ export default function AdminForm({
               label="Nombre"
               defaultValue={item.title}
             />
+            <Text
+              name={`services.items.${i}.tagline`}
+              label="Subtítulo corto (etiqueta)"
+              defaultValue={item.tagline}
+            />
             <Area
               name={`services.items.${i}.description`}
               label="Descripción"
               defaultValue={item.description}
             />
+            <Area
+              name={`services.items.${i}.includes`}
+              label="¿Qué incluye? (un ítem por línea)"
+              defaultValue={item.includes.join("\n")}
+              rows={5}
+            />
+            <Area
+              name={`services.items.${i}.idealFor`}
+              label="Ideal para vos si… (un ítem por línea)"
+              defaultValue={item.idealFor.join("\n")}
+              rows={3}
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Text
+                name={`services.items.${i}.ctaLabel`}
+                label="Texto del botón"
+                defaultValue={item.ctaLabel}
+              />
+              <Text
+                name={`services.items.${i}.ctaHref`}
+                label="Destino del botón (#contacto o un link)"
+                defaultValue={item.ctaHref}
+              />
+            </div>
           </div>
         ))}
       </Section>
@@ -150,6 +182,21 @@ export default function AdminForm({
             name="contact.phone"
             label="WhatsApp / Teléfono (opcional)"
             defaultValue={content.contact.phone}
+          />
+          <Text
+            name="contact.youtubeUrl"
+            label="URL de YouTube (vacío = no se muestra)"
+            defaultValue={content.contact.youtubeUrl}
+          />
+          <Text
+            name="contact.xUrl"
+            label="URL de X (vacío = no se muestra)"
+            defaultValue={content.contact.xUrl}
+          />
+          <Text
+            name="contact.facebookUrl"
+            label="URL de Facebook (vacío = no se muestra)"
+            defaultValue={content.contact.facebookUrl}
           />
         </div>
       </Section>

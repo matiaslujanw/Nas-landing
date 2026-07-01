@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const links = [
   { href: "#sobre-mi", label: "Sobre Julieta" },
@@ -11,16 +12,40 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-bosque/10 bg-hueso/90 backdrop-blur">
+    <header
+      className={`sticky top-0 z-50 border-b bg-hueso/90 backdrop-blur transition-all duration-300 ${
+        scrolled
+          ? "border-bosque/10 shadow-lg shadow-bosque/5"
+          : "border-transparent"
+      }`}
+    >
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-6 px-6 py-4">
-        <a href="#top" className="flex flex-col leading-none">
-          <span className="font-heading text-[22px] font-black tracking-wide text-bosque">
-            NAS
-          </span>
-          <span className="mt-1 text-[9px] font-medium tracking-[0.28em] text-red-wine">
-            FITNESS LAB
+        <a href="#top" className="group flex items-center gap-2.5">
+          <Image
+            src="/images/brand/nas-icon-bosque.png"
+            alt="NAS Fitness Lab"
+            width={40}
+            height={40}
+            priority
+            className="h-9 w-9 transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="flex flex-col leading-none">
+            <span className="font-heading text-[22px] font-black tracking-wide text-bosque">
+              NAS
+            </span>
+            <span className="mt-1 text-[9px] font-medium tracking-[0.28em] text-red-wine">
+              FITNESS LAB
+            </span>
           </span>
         </a>
 
