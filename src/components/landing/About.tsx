@@ -12,7 +12,7 @@ export default function About({ content }: { content: SiteContent["about"] }) {
     <section id="sobre-mi" className="py-24">
       <div className="mx-auto grid max-w-[1180px] items-center gap-14 px-6 md:grid-cols-[0.85fr_1.15fr]">
         <Reveal from="left" className="order-first md:order-none">
-          <PhotoCarousel images={gallery} alt="Julieta Nas" interval={5000} />
+          <PhotoCarousel images={gallery} alt="Julieta Nas" interval={3000} />
         </Reveal>
 
         <Reveal from="right">
