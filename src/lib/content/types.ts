@@ -25,6 +25,8 @@ export type SiteContent = {
     paragraphs: string[];
     quote: string;
     image: string;
+    /** fotos para el carrusel; si está vacío se usa `image` */
+    gallery: string[];
   };
   services: {
     eyebrow: string;

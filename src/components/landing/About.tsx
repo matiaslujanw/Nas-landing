@@ -1,21 +1,21 @@
-import Image from "next/image";
 import type { SiteContent } from "@/lib/content/types";
+import PhotoCarousel from "./PhotoCarousel";
+import Reveal from "./Reveal";
 
 export default function About({ content }: { content: SiteContent["about"] }) {
+  const gallery =
+    content.gallery && content.gallery.length > 0
+      ? content.gallery
+      : [content.image];
+
   return (
     <section id="sobre-mi" className="py-24">
       <div className="mx-auto grid max-w-[1180px] items-center gap-14 px-6 md:grid-cols-[0.85fr_1.15fr]">
-        <div className="relative order-first aspect-[4/5] w-full overflow-hidden rounded-[20px] bg-musgo md:order-none">
-          <Image
-            src={content.image}
-            alt="Julieta Nas entrenando"
-            fill
-            sizes="(max-width: 768px) 100vw, 40vw"
-            className="object-cover object-top"
-          />
-        </div>
+        <Reveal from="left" className="order-first md:order-none">
+          <PhotoCarousel images={gallery} alt="Julieta Nas" interval={5000} />
+        </Reveal>
 
-        <div>
+        <Reveal from="right">
           <p className="mb-3 text-[13px] font-bold uppercase tracking-[0.12em] text-red-wine">
             {content.eyebrow}
           </p>
@@ -32,11 +32,14 @@ export default function About({ content }: { content: SiteContent["about"] }) {
           </p>
           <a
             href="#contacto"
-            className="inline-flex items-center justify-center rounded-full bg-red-wine px-7 py-3.5 text-[15px] font-semibold text-hueso transition hover:bg-[#611c3b]"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-red-wine px-7 py-3.5 text-[15px] font-semibold text-hueso transition hover:bg-[#611c3b]"
           >
             Conocé mi propuesta
+            <span className="transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

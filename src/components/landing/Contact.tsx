@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { SiteContent } from "@/lib/content/types";
+import Reveal from "./Reveal";
 
 export default function Contact({
   content,
@@ -40,8 +41,8 @@ export default function Contact({
   return (
     <section id="contacto" className="bg-bosque py-24 text-hueso">
       <div className="mx-auto grid max-w-[1180px] gap-16 px-6 md:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <p className="mb-3 text-[13px] font-bold uppercase tracking-[0.12em] text-red-wine">
+        <Reveal from="left">
+          <p className="mb-3 text-[13px] font-bold uppercase tracking-[0.12em] text-orquidea">
             Contacto
           </p>
           <h2 className="text-[clamp(30px,4vw,44px)] uppercase text-hueso">
@@ -87,11 +88,12 @@ export default function Contact({
               </a>
             </li>
           </ul>
-        </div>
+        </Reveal>
 
+        <Reveal from="right" delay={100} as="div">
         <form
           onSubmit={handleSubmit}
-          className="rounded-[20px] bg-hueso p-6 text-bosque md:p-10"
+          className="rounded-[20px] bg-hueso p-6 text-bosque shadow-2xl shadow-black/20 md:p-10"
         >
           <Field label="Nombre completo" htmlFor="name">
             <input id="name" name="name" type="text" required className={inputCls} />
@@ -136,6 +138,7 @@ export default function Contact({
             </p>
           )}
         </form>
+        </Reveal>
       </div>
     </section>
   );

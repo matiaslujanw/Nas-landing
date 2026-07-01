@@ -20,6 +20,12 @@ export const defaultContent: SiteContent = {
     ],
     quote: "Entrenar es confianza, fuerza y bienestar.",
     image: "/images/julieta/julieta-about.jpg",
+    gallery: [
+      "/images/julieta/julieta-about.jpg",
+      "/images/julieta/julieta-hero.jpg",
+      "/images/julieta/julieta-services.jpg",
+      "/images/julieta/julieta-contact.jpg",
+    ],
   },
   services: {
     eyebrow: "Servicios 1:1",
