@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -29,12 +30,22 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-6 px-6 py-4">
-        <a href="#top" className="flex flex-col leading-none">
-          <span className="font-heading text-[22px] font-black tracking-wide text-bosque">
-            NAS
-          </span>
-          <span className="mt-1 text-[9px] font-medium tracking-[0.28em] text-red-wine">
-            FITNESS LAB
+        <a href="#top" className="group flex items-center gap-2.5">
+          <Image
+            src="/images/brand/nas-icon-bosque.png"
+            alt="NAS Fitness Lab"
+            width={40}
+            height={40}
+            priority
+            className="h-9 w-9 transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="flex flex-col leading-none">
+            <span className="font-heading text-[22px] font-black tracking-wide text-bosque">
+              NAS
+            </span>
+            <span className="mt-1 text-[9px] font-medium tracking-[0.28em] text-red-wine">
+              FITNESS LAB
+            </span>
           </span>
         </a>
 
