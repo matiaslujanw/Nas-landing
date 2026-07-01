@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --color-red-wine: #7D234A;
+  --color-orquidea: #DB8BAE;
+  --color-bosque: #1D270C;
+  --color-musgo: #B1B87A;
+  --color-pardo: #CEC1BB;
+  --color-hueso: #FAF7F3;
+}
+
+@theme inline {
+  --color-red-wine: var(--color-red-wine);
+  --color-orquidea: var(--color-orquidea);
+  --color-bosque: var(--color-bosque);
+  --color-musgo: var(--color-musgo);
+  --color-pardo: var(--color-pardo);
+  --color-hueso: var(--color-hueso);
+
+  --font-heading: var(--font-unbounded);
+  --font-accent: var(--font-instrument-serif);
+  --font-body: var(--font-inter);
+}
+
+body {
+  background: var(--color-hueso);
+  color: var(--color-bosque);
+  font-family: var(--font-body), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.font-accent-italic {
+  font-family: var(--font-accent), serif;
+  font-style: italic;
+  font-weight: 400;
+}
