@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SiteContent } from "@/lib/content/types";
 import Reveal from "./Reveal";
+import SocialLinks from "./SocialLinks";
 
 export default function Contact({
   content,
@@ -50,44 +51,52 @@ export default function Contact({
           </h2>
           <p className="mt-4 max-w-[380px] text-hueso/80">{content.description}</p>
 
-          <ul className="mt-8 max-w-[380px] list-none p-0">
-            <li className="flex justify-between border-b border-hueso/15 py-4">
-              <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-musgo">
-                Instagram
+          <div className="mt-8 flex max-w-[400px] flex-col gap-3">
+            <a
+              href={`mailto:${content.email}`}
+              className="group flex items-center gap-4 rounded-2xl border border-hueso/10 bg-hueso/5 p-4 transition-all duration-300 hover:border-transparent hover:bg-hueso/10"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orquidea/20 text-orquidea transition group-hover:bg-orquidea group-hover:text-bosque">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                  <path d="M3 7l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </span>
+              <span className="flex flex-col">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.06em] text-musgo">
+                  Email
+                </span>
+                <span className="text-[15px] text-hueso">{content.email}</span>
+              </span>
+            </a>
+
+            {content.phone && (
               <a
-                href={content.instagramUrl}
+                href={`https://wa.me/${content.phone.replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noopener"
-                className="hover:text-orquidea"
+                className="group flex items-center gap-4 rounded-2xl border border-hueso/10 bg-hueso/5 p-4 transition-all duration-300 hover:border-transparent hover:bg-hueso/10"
               >
-                {content.instagramHandle}
-              </a>
-            </li>
-            {content.phone && (
-              <li className="flex justify-between border-b border-hueso/15 py-4">
-                <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-musgo">
-                  WhatsApp
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-musgo/20 text-musgo transition group-hover:bg-musgo group-hover:text-bosque">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                    <path d="M12 2a10 10 0 0 0-8.6 15.06L2 22l5.06-1.33A10 10 0 1 0 12 2Zm5.5 14.1c-.23.65-1.35 1.24-1.86 1.28-.5.05-1.02.24-3.4-.71-2.87-1.13-4.7-4.05-4.84-4.24-.14-.19-1.16-1.54-1.16-2.94s.74-2.08 1-2.37c.26-.28.57-.35.76-.35l.55.01c.18.01.42-.07.65.5.23.57.79 1.96.86 2.1.07.14.12.3.02.5-.1.19-.14.3-.28.47-.14.16-.3.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.94 1.95 1.24 2.23 1.38.28.14.44.12.6-.07.16-.19.7-.81.88-1.09.19-.28.37-.23.62-.14.26.09 1.63.77 1.9.91.29.14.48.21.55.33.07.12.07.7-.16 1.35Z" />
+                  </svg>
                 </span>
-                <a
-                  href={`https://wa.me/${content.phone.replace(/[^0-9]/g, "")}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="hover:text-orquidea"
-                >
-                  {content.phone}
-                </a>
-              </li>
-            )}
-            <li className="flex justify-between border-b border-hueso/15 py-4">
-              <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-musgo">
-                Email
-              </span>
-              <a href={`mailto:${content.email}`} className="hover:text-orquidea">
-                {content.email}
+                <span className="flex flex-col">
+                  <span className="text-[12px] font-semibold uppercase tracking-[0.06em] text-musgo">
+                    WhatsApp
+                  </span>
+                  <span className="text-[15px] text-hueso">{content.phone}</span>
+                </span>
               </a>
-            </li>
-          </ul>
+            )}
+          </div>
+
+          <div className="mt-8">
+            <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.06em] text-musgo">
+              Seguime en redes
+            </p>
+            <SocialLinks contact={content} />
+          </div>
         </Reveal>
 
         <Reveal from="right" delay={100} as="div">

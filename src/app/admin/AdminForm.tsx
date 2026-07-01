@@ -183,6 +183,21 @@ export default function AdminForm({
             label="WhatsApp / Teléfono (opcional)"
             defaultValue={content.contact.phone}
           />
+          <Text
+            name="contact.youtubeUrl"
+            label="URL de YouTube (vacío = no se muestra)"
+            defaultValue={content.contact.youtubeUrl}
+          />
+          <Text
+            name="contact.xUrl"
+            label="URL de X (vacío = no se muestra)"
+            defaultValue={content.contact.xUrl}
+          />
+          <Text
+            name="contact.facebookUrl"
+            label="URL de Facebook (vacío = no se muestra)"
+            defaultValue={content.contact.facebookUrl}
+          />
         </div>
       </Section>
 

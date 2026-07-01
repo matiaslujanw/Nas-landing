@@ -57,6 +57,10 @@ export type SiteContent = {
     instagramUrl: string;
     email: string;
     phone: string;
+    /** URLs de redes (vacío = no se muestra el ícono) */
+    youtubeUrl: string;
+    xUrl: string;
+    facebookUrl: string;
   };
   footer: {
     copy: string;

@@ -98,6 +98,9 @@ export async function saveContent(_prev: unknown, formData: FormData) {
       instagramUrl: str(formData, "contact.instagramUrl"),
       email: str(formData, "contact.email"),
       phone: str(formData, "contact.phone"),
+      youtubeUrl: str(formData, "contact.youtubeUrl"),
+      xUrl: str(formData, "contact.xUrl"),
+      facebookUrl: str(formData, "contact.facebookUrl"),
     },
     footer: {
       copy: str(formData, "footer.copy"),

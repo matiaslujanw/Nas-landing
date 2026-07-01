@@ -128,6 +128,9 @@ export const defaultContent: SiteContent = {
     instagramUrl: "https://www.instagram.com/juli.nas",
     email: "digitalamenitiessas@gmail.com",
     phone: "",
+    youtubeUrl: "https://www.youtube.com",
+    xUrl: "https://x.com",
+    facebookUrl: "https://www.facebook.com",
   },
   footer: {
     copy: "© 2026 NAS Fitness Lab — Julieta Nas",
