@@ -58,8 +58,12 @@ export default function Services({
 }) {
   const [active, setActive] = useState(0);
   const items = content.items;
-  const current = items[active];
-  const st = themeStyles[current.theme];
+
+  if (items.length === 0) return null;
+
+  const safeActive = Math.min(active, items.length - 1);
+  const current = items[safeActive];
+  const st = themeStyles[current.theme] ?? themeStyles.bosque;
 
   const handleCta = (href: string, title: string) => {
     if (href === "#contacto") {
@@ -91,7 +95,7 @@ export default function Services({
         <Reveal from="up" delay={100}>
           <div className="mt-12 flex flex-wrap justify-center gap-3">
             {items.map((s, i) => {
-              const isActive = i === active;
+              const isActive = i === safeActive;
               return (
                 <button
                   key={s.title}
@@ -119,7 +123,7 @@ export default function Services({
         {/* Panel de detalle */}
         <Reveal from="scale" delay={150}>
           <div
-            key={active}
+            key={safeActive}
             className={`mt-8 grid gap-10 rounded-[28px] p-8 transition-colors duration-500 md:grid-cols-2 md:p-12 lg:p-14 ${st.panel} animate-[fadeIn_0.5s_ease]`}
           >
             {/* Columna izquierda: intro + CTA */}
