@@ -7,8 +7,10 @@ import SocialLinks from "./SocialLinks";
 
 export default function Contact({
   content,
+  serviceTitles,
 }: {
   content: SiteContent["contact"];
+  serviceTitles: string[];
 }) {
   const [note, setNote] = useState("");
 
@@ -118,9 +120,11 @@ export default function Contact({
               <option value="" disabled>
                 Elegí una opción
               </option>
-              <option value="Coaching 1:1">Coaching 1:1</option>
-              <option value="Entrenamiento">Entrenamiento</option>
-              <option value="Nutrición">Nutrición</option>
+              {serviceTitles.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
               <option value="No estoy segura / Quiero consultar">
                 No estoy segura / Quiero consultar
               </option>

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { defaultContent } from "@/lib/content/default";
 import { CONTENT_ROW_ID } from "@/lib/content/load";
-import type { SiteContent } from "@/lib/content/types";
+import type { ServiceItem, SiteContent } from "@/lib/content/types";
 
 export async function login(_prev: unknown, formData: FormData) {
   if (!isSupabaseConfigured()) {
@@ -69,16 +69,7 @@ export async function saveContent(_prev: unknown, formData: FormData) {
       eyebrow: str(formData, "services.eyebrow"),
       heading: str(formData, "services.heading"),
       subheading: str(formData, "services.subheading"),
-      items: defaultContent.services.items.map((item, i) => ({
-        ...item,
-        title: str(formData, `services.items.${i}.title`),
-        tagline: str(formData, `services.items.${i}.tagline`) || item.tagline,
-        description: str(formData, `services.items.${i}.description`),
-        includes: lines(formData, `services.items.${i}.includes`, item.includes),
-        idealFor: lines(formData, `services.items.${i}.idealFor`, item.idealFor),
-        ctaLabel: str(formData, `services.items.${i}.ctaLabel`) || item.ctaLabel,
-        ctaHref: str(formData, `services.items.${i}.ctaHref`) || item.ctaHref,
-      })),
+      items: parseServices(formData),
     },
     testimonials: {
       ...defaultContent.testimonials,
@@ -120,15 +111,49 @@ export async function saveContent(_prev: unknown, formData: FormData) {
   return { error: "", ok: true };
 }
 
+const SERVICE_THEMES = ["bosque", "orquidea", "musgo"] as const;
+type ServiceTheme = (typeof SERVICE_THEMES)[number];
+
+/**
+ * Reconstruye la lista de servicios desde el FormData. El admin envía cuántos
+ * hay en `services.count`, así Julieta puede agregar o eliminar servicios sin
+ * quedar atada a la cantidad por defecto. Los servicios sin nombre se descartan.
+ */
+function parseServices(formData: FormData): ServiceItem[] {
+  const count = Number(formData.get("services.count") ?? 0);
+  const items: ServiceItem[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const title = str(formData, `services.items.${i}.title`);
+    if (!title) continue;
+
+    const themeRaw = str(formData, `services.items.${i}.theme`);
+    const theme: ServiceTheme = (SERVICE_THEMES as readonly string[]).includes(themeRaw)
+      ? (themeRaw as ServiceTheme)
+      : "bosque";
+
+    items.push({
+      title,
+      tagline: str(formData, `services.items.${i}.tagline`),
+      description: str(formData, `services.items.${i}.description`),
+      includes: lines(formData, `services.items.${i}.includes`),
+      idealFor: lines(formData, `services.items.${i}.idealFor`),
+      ctaLabel: str(formData, `services.items.${i}.ctaLabel`) || "Quiero sumarme",
+      ctaHref: str(formData, `services.items.${i}.ctaHref`) || "#contacto",
+      theme,
+    });
+  }
+
+  return items;
+}
+
 function str(formData: FormData, key: string): string {
   return ((formData.get(key) as string) ?? "").trim();
 }
 
-function lines(formData: FormData, key: string, fallback: string[]): string[] {
-  const raw = (formData.get(key) as string) ?? "";
-  const parsed = raw
+function lines(formData: FormData, key: string): string[] {
+  return ((formData.get(key) as string) ?? "")
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean);
-  return parsed.length > 0 ? parsed : fallback;
 }

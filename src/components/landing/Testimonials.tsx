@@ -26,7 +26,7 @@ export default function Testimonials({
     setActive((i) => (i + dir + items.length) % items.length);
 
   return (
-    <section id="testimonios" className="bg-hueso py-24">
+    <section id="testimonios" className="bg-orquidea/10 py-24">
       <div className="mx-auto max-w-[1180px] px-6">
         <Reveal from="up">
           <p className="mb-3 text-center text-[13px] font-bold uppercase tracking-[0.12em] text-red-wine">
