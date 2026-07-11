@@ -36,6 +36,36 @@ export default function AdminForm({
     ok: false,
   });
 
+  // El contenedor con `useActionState` y la barra de guardado quedan siempre
+  // montados (así el "✓ Cambios guardados" sobrevive). Los campos se remontan
+  // vía `key` cuando un guardado revalida /admin y trae contenido fresco: así
+  // todos los inputs no-controlados re-leen su valor desde la DB y no quedan
+  // con los valores del cargado inicial tras el reset automático de React 19.
+  return (
+    <form action={formAction} className="flex flex-col gap-10 pb-24">
+      <Fields key={JSON.stringify(content)} content={content} disabled={disabled} />
+
+      {/* GUARDAR */}
+      <div className="fixed inset-x-0 bottom-0 border-t border-bosque/10 bg-hueso/95 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4">
+          <div className="text-sm">
+            {state?.ok && <span className="font-semibold text-musgo">✓ Cambios guardados</span>}
+            {state?.error && <span className="font-semibold text-red-wine">{state.error}</span>}
+          </div>
+          <button
+            type="submit"
+            disabled={pending || disabled}
+            className="rounded-full bg-red-wine px-8 py-3 text-[15px] font-semibold text-hueso transition hover:bg-[#611c3b] disabled:opacity-50"
+          >
+            {pending ? "Guardando…" : "Guardar cambios"}
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+function Fields({ content, disabled }: { content: SiteContent; disabled?: boolean }) {
   // Lista de servicios editable: se puede agregar y eliminar. Las inputs son
   // no-controladas (defaultValue); el `uid` como key preserva lo tipeado al
   // reordenar/eliminar, y el `name` por índice es lo que lee el server action.
@@ -50,7 +80,7 @@ export default function AdminForm({
     setServices((s) => s.filter((x) => x.uid !== uid));
 
   return (
-    <form action={formAction} className="flex flex-col gap-10 pb-24">
+    <>
       {/* HERO */}
       <Section title="Portada (Hero)">
         <Text name="hero.eyebrow" label="Bajada superior" defaultValue={content.hero.eyebrow} />
@@ -280,24 +310,7 @@ export default function AdminForm({
       <Section title="Pie de página">
         <Text name="footer.copy" label="Texto de copyright" defaultValue={content.footer.copy} />
       </Section>
-
-      {/* GUARDAR */}
-      <div className="fixed inset-x-0 bottom-0 border-t border-bosque/10 bg-hueso/95 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4">
-          <div className="text-sm">
-            {state?.ok && <span className="font-semibold text-musgo">✓ Cambios guardados</span>}
-            {state?.error && <span className="font-semibold text-red-wine">{state.error}</span>}
-          </div>
-          <button
-            type="submit"
-            disabled={pending || disabled}
-            className="rounded-full bg-red-wine px-8 py-3 text-[15px] font-semibold text-hueso transition hover:bg-[#611c3b] disabled:opacity-50"
-          >
-            {pending ? "Guardando…" : "Guardar cambios"}
-          </button>
-        </div>
-      </div>
-    </form>
+    </>
   );
 }
 
