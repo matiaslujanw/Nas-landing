@@ -106,6 +106,11 @@ export async function saveContent(_prev: unknown, formData: FormData) {
     return { error: `No se pudo guardar: ${error.message}`, ok: false };
   }
 
+  // Revalidamos la landing pública y también /admin: al volver contenido fresco,
+  // el formulario se re-siembra desde la DB (ver la `key` en AdminForm). Esto
+  // evita que React 19, al resetear el form tras la action, deje los inputs con
+  // los valores del cargado inicial (lo que hacía "volver a lo anterior" y que
+  // un segundo guardado pisara al primero con datos viejos).
   revalidatePath("/");
   revalidatePath("/admin");
   return { error: "", ok: true };
