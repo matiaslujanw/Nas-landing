@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Unbounded, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -25,6 +25,20 @@ export const metadata: Metadata = {
   title: "NAS Fitness Lab — Coaching 1:1 con Julieta Nas",
   description:
     "Coaching 1:1 en entrenamiento y nutrición con Julieta Nas. Sumate a la comunidad NAS y empezá tu cambio hoy.",
+  // iOS no lee el manifest: para que "Añadir a inicio" abra a pantalla completa
+  // hace falta este bloque. Next emite <meta mobile-web-app-capable> (el nombre
+  // estándar, ya no el prefijado con apple-) más el título y el estilo de la
+  // barra de estado.
+  appleWebApp: {
+    capable: true,
+    title: "NAS",
+    statusBarStyle: "default",
+  },
+};
+
+// `themeColor` va acá y no en `metadata`: en metadata quedó deprecado.
+export const viewport: Viewport = {
+  themeColor: "#FAF7F3",
 };
 
 export default function RootLayout({
