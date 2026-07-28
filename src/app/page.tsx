@@ -3,6 +3,7 @@ import Hero from "@/components/landing/Hero";
 import ValuesStrip from "@/components/landing/ValuesStrip";
 import About from "@/components/landing/About";
 import Services from "@/components/landing/Services";
+import AppSection from "@/components/landing/AppSection";
 import Testimonials from "@/components/landing/Testimonials";
 import SectionDivider from "@/components/landing/SectionDivider";
 import Contact from "@/components/landing/Contact";
@@ -23,6 +24,7 @@ export default async function Home() {
         <About content={content.about} />
         <SectionDivider />
         <Services content={content.services} />
+        <AppSection content={content.app} />
         <SectionDivider />
         <Testimonials content={content.testimonials} />
         <Contact

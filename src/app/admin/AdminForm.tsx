@@ -3,9 +3,13 @@
 import { useActionState, useRef, useState } from "react";
 import { saveContent } from "./actions";
 import ImageField from "@/components/admin/ImageField";
-import type { ServiceItem, SiteContent } from "@/lib/content/types";
+import MediaField from "@/components/admin/MediaField";
+import type { AppMediaItem, ServiceItem, SiteContent } from "@/lib/content/types";
 
 type ServiceDraft = ServiceItem & { uid: string };
+type MediaDraft = AppMediaItem & { uid: string };
+
+const BLANK_MEDIA: AppMediaItem = { src: "", poster: "", alt: "" };
 
 const THEME_OPTIONS = [
   { value: "bosque", label: "Verde bosque" },
@@ -78,6 +82,17 @@ function Fields({ content, disabled }: { content: SiteContent; disabled?: boolea
     setServices((s) => [...s, { ...BLANK_SERVICE, uid: `svc-${uidRef.current++}` }]);
   const removeService = (uid: string) =>
     setServices((s) => s.filter((x) => x.uid !== uid));
+
+  // Mismo esquema para los celulares de la sección App.
+  const mediaUidRef = useRef(content.app.media.length);
+  const [appMedia, setAppMedia] = useState<MediaDraft[]>(() =>
+    content.app.media.map((m, i) => ({ ...m, uid: `media-${i}` }))
+  );
+
+  const addMedia = () =>
+    setAppMedia((m) => [...m, { ...BLANK_MEDIA, uid: `media-${mediaUidRef.current++}` }]);
+  const removeMedia = (uid: string) =>
+    setAppMedia((m) => m.filter((x) => x.uid !== uid));
 
   return (
     <>
@@ -214,6 +229,88 @@ function Fields({ content, disabled }: { content: SiteContent; disabled?: boolea
           className="w-fit rounded-full border-2 border-dashed border-red-wine/50 px-5 py-2.5 text-sm font-semibold text-red-wine transition hover:border-solid hover:bg-red-wine hover:text-hueso"
         >
           + Agregar servicio
+        </button>
+      </Section>
+
+      {/* APP */}
+      <Section title="Sección App">
+        <Text name="app.heading" label="Título" defaultValue={content.app.heading} />
+        <Area
+          name="app.subheading"
+          label="Subtítulo"
+          defaultValue={content.app.subheading}
+        />
+        <Area
+          name="app.bullets"
+          label="Lista de beneficios (uno por línea)"
+          defaultValue={content.app.bullets.join("\n")}
+          rows={7}
+        />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Text
+            name="app.ctaLabel"
+            label="Texto del botón"
+            defaultValue={content.app.ctaLabel}
+          />
+          <Text
+            name="app.ctaHref"
+            label="Destino del botón (#contacto o un link)"
+            defaultValue={content.app.ctaHref}
+          />
+        </div>
+
+        <input type="hidden" name="app.media.count" value={appMedia.length} readOnly />
+
+        {appMedia.map((item, i) => (
+          <div
+            key={item.uid}
+            className="overflow-hidden rounded-2xl border-2 border-bosque/15 bg-white shadow-md shadow-bosque/5"
+          >
+            <div className="flex items-center justify-between bg-bosque px-4 py-3">
+              <div className="flex items-center gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-red-wine text-sm font-bold text-hueso">
+                  {i + 1}
+                </span>
+                <span className="font-heading text-sm uppercase tracking-wide text-hueso">
+                  Celular {i + 1}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => removeMedia(item.uid)}
+                className="rounded-full border border-hueso/40 px-3 py-1 text-xs font-semibold text-hueso transition hover:bg-hueso hover:text-bosque"
+              >
+                Eliminar
+              </button>
+            </div>
+            <div className="flex flex-col gap-4 p-5">
+              <MediaField
+                name={`app.media.${i}.src`}
+                label="Video o imagen"
+                hint="Grabación de pantalla (MP4/MOV) o captura (JPG/PNG/GIF). Vertical, hasta 45 MB. El video se reproduce solo, en loop y sin sonido."
+                defaultValue={item.src}
+                disabled={disabled}
+              />
+              <Text
+                name={`app.media.${i}.alt`}
+                label="Descripción (accesibilidad)"
+                defaultValue={item.alt}
+              />
+              <input
+                type="hidden"
+                name={`app.media.${i}.poster`}
+                defaultValue={item.poster}
+              />
+            </div>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          onClick={addMedia}
+          className="w-fit rounded-full border-2 border-dashed border-red-wine/50 px-5 py-2.5 text-sm font-semibold text-red-wine transition hover:border-solid hover:bg-red-wine hover:text-hueso"
+        >
+          + Agregar celular
         </button>
       </Section>
 

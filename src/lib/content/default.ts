@@ -98,6 +98,39 @@ export const defaultContent: SiteContent = {
       },
     ],
   },
+  app: {
+    heading: "La app que te transforma",
+    subheading:
+      "Todo lo que necesitás para sostener el entrenamiento y ver resultados reales.",
+    bullets: [
+      "Programas de fuerza para casa y gym, diseñados para progresar de verdad.",
+      "Comunidad de mujeres que entrenan, se apoyan y se celebran entre sí.",
+      "Guías de nutrición según objetivos + recetas simples y ricas para el día a día.",
+      "Clases de stretching, yoga y movilidad para equilibrar cuerpo y mente.",
+      "Experiencias NAS: eventos, encuentros, caminatas y espacios para conectar.",
+      "Beneficios exclusivos de marcas amigas.",
+    ],
+    ctaLabel: "Empezá hoy",
+    ctaHref: "#contacto",
+    // Placeholders: se reemplazan desde /admin por grabaciones de pantalla.
+    media: [
+      {
+        src: "/images/julieta/julieta-services.jpg",
+        poster: "",
+        alt: "Pantalla de programas de entrenamiento",
+      },
+      {
+        src: "/images/julieta/julieta-about.jpg",
+        poster: "",
+        alt: "Pantalla de rutinas del mes",
+      },
+      {
+        src: "/images/julieta/julieta-contact.jpg",
+        poster: "",
+        alt: "Pantalla de la comunidad",
+      },
+    ],
+  },
   testimonials: {
     eyebrow: "Testimonios",
     heading: "Lo que dice la comunidad",
