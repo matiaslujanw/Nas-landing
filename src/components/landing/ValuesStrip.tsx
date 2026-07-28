@@ -5,17 +5,31 @@ const chips = [
   { label: "DISCIPLINA", className: "bg-hueso text-pardo" },
 ];
 
+/** cantidad de copias de la tira; tiene que coincidir con el -12.5% de @keyframes marquee */
+const COPIES = 8;
+
 export default function ValuesStrip() {
   return (
-    <section className="bg-bosque py-7">
-      <div className="mx-auto flex max-w-[1180px] flex-wrap justify-center gap-4 px-6">
-        {chips.map((c) => (
-          <span
-            key={c.label}
-            className={`rounded-full px-6 py-2.5 font-heading text-[13px] font-bold tracking-[0.04em] ${c.className}`}
+    <section
+      aria-label="Nuestros valores"
+      className="overflow-x-auto bg-bosque py-7 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+    >
+      <div className="marquee-track flex w-max animate-marquee">
+        {Array.from({ length: COPIES }, (_, copy) => (
+          <div
+            key={copy}
+            className="flex shrink-0 gap-4 pe-4"
+            aria-hidden={copy > 0 || undefined}
           >
-            {c.label}
-          </span>
+            {chips.map((c) => (
+              <span
+                key={c.label}
+                className={`rounded-full px-6 py-2.5 font-heading text-[13px] font-bold whitespace-nowrap tracking-[0.04em] ${c.className}`}
+              >
+                {c.label}
+              </span>
+            ))}
+          </div>
         ))}
       </div>
     </section>

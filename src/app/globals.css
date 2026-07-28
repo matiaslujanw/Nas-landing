@@ -20,6 +20,18 @@
   --font-heading: var(--font-unbounded);
   --font-accent: var(--font-instrument-serif);
   --font-body: var(--font-inter);
+
+  --animate-marquee: marquee 18s linear infinite;
+}
+
+/* la pista repite los chips 8 veces, por eso el ciclo termina en -12.5% */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-12.5%);
+  }
 }
 
 body {
@@ -58,5 +70,11 @@ h1, h2, h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* sin animación la pista queda quieta: se recorre a mano */
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
   }
 }
