@@ -26,7 +26,8 @@ create policy "site_content_auth_write"
   with check (auth.role() = 'authenticated');
 
 -- ============================================================
--- 2) Storage bucket para imágenes editables desde el admin
+-- 2) Storage bucket para las imágenes y videos editables desde el admin
+--    (guarda también las grabaciones de pantalla de la sección App)
 -- ============================================================
 insert into storage.buckets (id, name, public)
 values ('site-images', 'site-images', true)

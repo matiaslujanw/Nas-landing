@@ -19,6 +19,15 @@ export type TestimonialItem = {
   author: string;
 };
 
+export type AppMediaItem = {
+  /** URL del archivo: video (mp4/webm/mov) o imagen (jpg/png/gif/webp) */
+  src: string;
+  /** primer frame que se muestra mientras el video carga; opcional */
+  poster: string;
+  /** descripción para lectores de pantalla */
+  alt: string;
+};
+
 export type SiteContent = {
   hero: {
     eyebrow: string;
@@ -43,6 +52,17 @@ export type SiteContent = {
     heading: string;
     subheading: string;
     items: ServiceItem[];
+  };
+  app: {
+    heading: string;
+    subheading: string;
+    /** bullets de la lista */
+    bullets: string[];
+    ctaLabel: string;
+    /** destino del botón: "#contacto" o una URL externa */
+    ctaHref: string;
+    /** capturas o grabaciones de pantalla que se muestran en los celulares */
+    media: AppMediaItem[];
   };
   testimonials: {
     eyebrow: string;

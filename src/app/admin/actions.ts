@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { defaultContent } from "@/lib/content/default";
 import { CONTENT_ROW_ID } from "@/lib/content/load";
-import type { ServiceItem, SiteContent } from "@/lib/content/types";
+import type { AppMediaItem, ServiceItem, SiteContent } from "@/lib/content/types";
 
 export async function login(_prev: unknown, formData: FormData) {
   if (!isSupabaseConfigured()) {
@@ -70,6 +70,15 @@ export async function saveContent(_prev: unknown, formData: FormData) {
       heading: str(formData, "services.heading"),
       subheading: str(formData, "services.subheading"),
       items: parseServices(formData),
+    },
+    app: {
+      ...defaultContent.app,
+      heading: str(formData, "app.heading"),
+      subheading: str(formData, "app.subheading"),
+      bullets: lines(formData, "app.bullets"),
+      ctaLabel: str(formData, "app.ctaLabel"),
+      ctaHref: str(formData, "app.ctaHref") || "#contacto",
+      media: parseAppMedia(formData),
     },
     testimonials: {
       ...defaultContent.testimonials,
@@ -146,6 +155,29 @@ function parseServices(formData: FormData): ServiceItem[] {
       ctaLabel: str(formData, `services.items.${i}.ctaLabel`) || "Quiero sumarme",
       ctaHref: str(formData, `services.items.${i}.ctaHref`) || "#contacto",
       theme,
+    });
+  }
+
+  return items;
+}
+
+/**
+ * Reconstruye los celulares de la sección App. Igual que los servicios, la
+ * cantidad viaja en `app.media.count` para poder agregar y sacar sin límite.
+ * Los que quedaron sin archivo cargado se descartan.
+ */
+function parseAppMedia(formData: FormData): AppMediaItem[] {
+  const count = Number(formData.get("app.media.count") ?? 0);
+  const items: AppMediaItem[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const src = str(formData, `app.media.${i}.src`);
+    if (!src) continue;
+
+    items.push({
+      src,
+      poster: str(formData, `app.media.${i}.poster`),
+      alt: str(formData, `app.media.${i}.alt`),
     });
   }
 

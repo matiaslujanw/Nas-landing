@@ -32,6 +32,7 @@ export async function loadContent(): Promise<SiteContent> {
       hero: { ...defaultContent.hero, ...stored.hero },
       about: { ...defaultContent.about, ...stored.about },
       services: { ...defaultContent.services, ...stored.services },
+      app: { ...defaultContent.app, ...stored.app },
       testimonials: { ...defaultContent.testimonials, ...stored.testimonials },
       contact: { ...defaultContent.contact, ...stored.contact },
       footer: { ...defaultContent.footer, ...stored.footer },
